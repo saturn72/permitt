@@ -33,7 +33,7 @@ jobs:
 
       - name: Pack permitt nuget package
         working-directory: ./src
-        run: dotnet pack ./Permitt.Tests/Permitt.Tests.csproj --configuration Release --output ./nupkg --no-build --include-symbols  --include-source -p:SymbolPackageFormat=snupkg
+        run: dotnet pack ./Permitt/Permitt.csproj --configuration Release --output ./nupkg --no-build --include-symbols  --include-source -p:SymbolPackageFormat=snupkg
 
       - name: Push packages to nuget
         working-directory: ./src/nupkg

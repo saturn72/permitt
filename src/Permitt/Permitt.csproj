@@ -1,8 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<IsPackable>true</IsPackable>
+		<PackageId>anyservice</PackageId>
+		<Version>1.0.1</Version>
+		<Authors>roi@saturn72.com</Authors>
+		<Company>saturn technologies</Company>
+		<PackageProjectUrl>https://github.com/saturn72/permitt</PackageProjectUrl>
+		<LangVersion>8.0</LangVersion>
+		<OutputType>Library</OutputType>
+		<RepositoryUrl>https://github.com/saturn72/permitt</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AnyService.Utilities" Version="1.0.15-Preview" />
