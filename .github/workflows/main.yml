@@ -1,0 +1,42 @@
+name: permitt ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  continunous_delivery:
+    name: build, test & deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Checkout main branch
+        uses: actions/checkout@main
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Build
+        working-directory: ./src
+        run: dotnet build --configuration Release
+
+      - name: Test Permitt.Tests
+        working-directory: ./src/Permitt.Tests
+        run: dotnet test --verbosity normal --configuration Release --no-build /p:CollectCoverage=true
+
+      - name: Pack permitt nuget package
+        working-directory: ./src
+        run: dotnet pack ./Permitt.Tests/Permitt.Tests.csproj --configuration Release --output ./nupkg --no-build --include-symbols  --include-source -p:SymbolPackageFormat=snupkg
+
+      - name: Push packages to nuget
+        working-directory: ./src/nupkg
+        run: dotnet nuget push *.nupkg --api-key $nuget_api_key --source https://api.nuget.org/v3/index.json
+        env:
+          nuget_api_key: ${{secrets.NUGET_DEPLOY_KEY}}
